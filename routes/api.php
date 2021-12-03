@@ -25,4 +25,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
 
     Route::post('/auth/logout', [AuthController::class, 'logout']);
+    Route::get('test','TeachersController@createTeacher');
 });
+
