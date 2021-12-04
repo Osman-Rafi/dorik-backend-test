@@ -29,5 +29,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/create-teacher', [AdminController::class, 'createTeacher']);
     Route::post('/create-classroom', [TeachersController::class, 'createClassroom']);
+    Route::delete('/end-classroom/{id}', [TeachersController::class, 'endClassroom']);
 });
 

@@ -15,6 +15,7 @@ class CreateClassroomsTable extends Migration
             $table->string('subject');
             $table->string('invitation_code');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -22,6 +23,7 @@ class CreateClassroomsTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign('user_id');
+            $table->softDeletes();
         });
         Schema::dropIfExists('classrooms');
     }
