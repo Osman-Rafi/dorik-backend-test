@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Classroom;
+use App\Post;
 use App\SubjectTeacher;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class TeachersController extends Controller
 {
@@ -65,7 +67,7 @@ class TeachersController extends Controller
         $user_id = auth()->user()->id;
         $class = Classroom::findOrFail($id);
 
-        if ($user_role === 1 || $user_id === $class->user_id ) {
+        if ($user_role === 1 || $user_id === $class->user_id) {
             $available_classes = Classroom::findOrFail($id);
             if ($available_classes->delete()) {
                 return $this->success([
@@ -75,5 +77,27 @@ class TeachersController extends Controller
             return $this->error('Something went wrong', 401);
         }
         return $this->error('Access denied', 401);
+    }
+
+    public function createPost(Request $request)
+    {
+        $attr = $request->validate([
+            'type' => 'required|string|in:assignment,exam',
+            'deadline' => 'required|date_format:Y-m-d H:i:s',
+            'attachment' => 'mimes:pdf,image'
+        ]);
+
+        $filepath = Storage::disk('public')->put('posts', $attr['attachment']);
+        $post = Post::create([
+            'type' => $attr['type'],
+            'deadline' => $attr['deadline'],
+            'user_id' => auth()->user()->id,
+            'attachment' => $filepath
+        ]);
+
+        return $this->success([
+            'message' => 'Post Created',
+            'classroom' => $post
+        ]);
     }
 }
