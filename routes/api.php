@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TeachersController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,4 +34,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/create-post', [TeachersController::class, 'createPost']);
 });
+
+Route::post('/subscribe-to-class-step-1', [StudentsController::class, 'registerForClassStep1']);
+Route::post('/subscribe-to-class-step-2', [StudentsController::class, 'registerForClassStep2']);
 
