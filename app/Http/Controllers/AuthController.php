@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\RegisteredStudent;
 use App\Traits\ApiResponser;
-use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -44,9 +45,18 @@ class AuthController extends Controller
             return $this->error('Credentials not match', 401);
         }
 
-        return $this->success([
-            'token' => auth()->user()->createToken('API Token')->plainTextToken
-        ]);
+        $user = auth()->user();
+
+        if ($user->role === 3) {
+            $registered_class = RegisteredStudent::with('user')->where('user_id', $user->id)->get();
+            return $this->success([
+                $registered_class,
+            ]);
+        } else {
+            return $this->success([
+                'token' => auth()->user()->createToken('API Token')->plainTextToken,
+            ]);
+        }
     }
 
     public function logout()

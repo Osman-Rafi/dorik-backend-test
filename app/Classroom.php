@@ -16,4 +16,14 @@ class Classroom extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function registeredStudents()
+    {
+        return $this->hasMany(RegisteredStudent::class);
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

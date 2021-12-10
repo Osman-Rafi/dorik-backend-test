@@ -8,6 +8,7 @@ use App\RegisteredStudent;
 use App\Traits\ApiResponser;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StudentsController extends Controller
 {
@@ -44,19 +45,27 @@ class StudentsController extends Controller
             'password' => 'required|min:6'
         ]);
 
-        $user = User::create([
-            'name' => $attr['name'],
-            'email' => $attr['email'],
-            'password' => bcrypt($attr['password']),
-            'role' => 3
-        ]);
+        $if_user_exits = DB::table('users')->where('email', $attr['email'])->exists();
 
-        $registered_student = RegisteredStudent::create([
+        if (!$if_user_exits) {
+            $user = User::create([
+                'name' => $attr['name'],
+                'email' => $attr['email'],
+                'password' => bcrypt($attr['password']),
+                'role' => 3
+            ]);
+        } else {
+            $user = User::where('email', $attr['email'])->first();
+        }
+        RegisteredStudent::create([
             'school_id' => $attr['school_id'],
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'class_id' => $class_id
         ]);
 
-
+        return $this->success([
+            'success' => 'Student Registered Successfully !'
+        ]);
     }
 
 

@@ -20,6 +20,8 @@ class CreatePostsTable extends Migration
             $table->timestamp('deadline');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('class_id');
+            $table->foreign('class_id')->references('id')->on('classrooms')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -33,6 +35,7 @@ class CreatePostsTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign('user_id');
+            $table->dropForeign('class_id');
             $table->softDeletes();
         });
         Schema::dropIfExists('posts');

@@ -37,4 +37,3 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 Route::post('/subscribe-to-class-step-1', [StudentsController::class, 'registerForClassStep1']);
 Route::post('/subscribe-to-class-step-2', [StudentsController::class, 'registerForClassStep2']);
-

@@ -7,8 +7,8 @@ use App\Post;
 use App\SubjectTeacher;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class TeachersController extends Controller
 {
@@ -84,7 +84,8 @@ class TeachersController extends Controller
         $attr = $request->validate([
             'type' => 'required|string|in:assignment,exam',
             'deadline' => 'required|date_format:Y-m-d H:i:s',
-            'attachment' => 'mimes:pdf,image'
+            'attachment' => 'mimes:pdf,image',
+            'class_id' => 'required|integer'
         ]);
 
         $filepath = Storage::disk('public')->put('posts', $attr['attachment']);
@@ -92,7 +93,8 @@ class TeachersController extends Controller
             'type' => $attr['type'],
             'deadline' => $attr['deadline'],
             'user_id' => auth()->user()->id,
-            'attachment' => $filepath
+            'attachment' => $filepath,
+            'class_id' => $attr['class_id']
         ]);
 
         return $this->success([

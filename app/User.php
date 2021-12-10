@@ -40,6 +40,6 @@ class User extends Authenticatable
 
     public function registeredStudent()
     {
-        return $this->hasOne(RegisteredStudent::class);
+        return $this->hasMany(RegisteredStudent::class);
     }
 }
