@@ -68,5 +68,22 @@ class StudentsController extends Controller
         ]);
     }
 
+    public function seeUpcomingPosts()
+    {
+        $user = auth()->user();
+
+        $registered_classes = RegisteredStudent::select('id','school_id','class_id')->with([
+            'classroom' => function ($query) {
+                $query->select('id', 'subject')->with([
+                    'posts' => function ($q) {
+                        $q->select('id', 'type', 'attachment', 'deadline', 'class_id');
+                    }
+                ]);
+            }
+        ])->where('user_id', $user->id)->get();
+
+        return $registered_classes;
+    }
+
 
 }

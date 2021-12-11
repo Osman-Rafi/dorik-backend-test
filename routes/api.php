@@ -33,6 +33,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/end-classroom/{id}', [TeachersController::class, 'endClassroom']);
 
     Route::post('/create-post', [TeachersController::class, 'createPost']);
+
+    Route::get('/view-upcoming-posts', [StudentsController::class, 'seeUpcomingPosts']);
 });
 
 Route::post('/subscribe-to-class-step-1', [StudentsController::class, 'registerForClassStep1']);

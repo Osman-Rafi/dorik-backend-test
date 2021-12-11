@@ -10,12 +10,13 @@ class RegisteredStudent extends Model
 
     public function classroom()
     {
-        return $this->belongsTo(Classroom::class);
+        return $this->belongsTo(Classroom::class,'class_id');
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
 
 }

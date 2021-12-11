@@ -45,18 +45,10 @@ class AuthController extends Controller
             return $this->error('Credentials not match', 401);
         }
 
-        $user = auth()->user();
-
-        if ($user->role === 3) {
-            $registered_class = RegisteredStudent::with('user')->where('user_id', $user->id)->get();
-            return $this->success([
-                $registered_class,
-            ]);
-        } else {
-            return $this->success([
-                'token' => auth()->user()->createToken('API Token')->plainTextToken,
-            ]);
-        }
+        return $this->success([
+            'token' => auth()->user()->createToken('API Token')->plainTextToken,
+            'user' => auth()->user()
+        ]);
     }
 
     public function logout()

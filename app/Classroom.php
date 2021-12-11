@@ -19,11 +19,11 @@ class Classroom extends Model
 
     public function registeredStudents()
     {
-        return $this->hasMany(RegisteredStudent::class);
+        return $this->hasMany(RegisteredStudent::class,'class_id');
     }
 
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class,'class_id');
     }
 }
