@@ -1,78 +1,348 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# Dorik - Backend Test Project (Virtual Classroom)
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+---
+## 🔦 Application Overview
 
-## About Laravel
+A Laravel Rest API for a virtual classroom. This application can be accessed by kind of API client (Postman, Insomnia ect.). 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+For this demo purpose, **Insomnia** API client is used here.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Types of User
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Admin _(Super user)_
+- Teacher _(Moderated user)_
+- Student _(Restricted user)_
 
-## Learning Laravel
+## Authentication & Application Security 
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+For Auth & application security Laravel Sanctum is used. Sanctum is a built in Laravel  featherweight authentication system for SPAs (single page applications), mobile applications, and simple, token based APIs.anctum allows each user of your application to generate multiple API tokens for their account. These tokens may be granted abilities / scopes which specify which actions the tokens are allowed to perform. 
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+# App Demo
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+A built in admin is created for the application & the admin has the all CRUD access. 
 
-## Contributing
+we will use the following user type for the application
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- 1 for Admin
+- 2 for Teachers
+- 3 for Students
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Login
 
-## Security Vulnerabilities
+**Endpoint :**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    /api/auth/login
 
-## License
+**⚒️ Credentials for Admin:**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    email - admin@email.com
+    password - password
+
+**Expected Successful Response**
+
+    {
+    "status": "Success",
+        "message": null,
+        "data": {
+        "token": "2|VNK4f81SJqDAGDH6YrER6nlRmjKeVlYNT4hIvE3C",
+            "user": {
+            "id": 1,
+            "name": "Shakib Al Hasan",
+            "email": "admin@email.com",
+            "email_verified_at": null,
+            "role": 1,
+            "created_at": null,
+            "updated_at": null
+            }
+        }
+    }
+    
+Note the token `VNK4f81SJqDAGDH6YrER6nlRmjKeVlYNT4hIvE3C`, this will be used as Bearer token for future requests with a `Bearer` prefix.
+
+### Create a Teacher (Admin only)
+
+**Endpoint :**
+
+    /api/create-teacher
+
+**⚒️ Request Parameters:**
+
+    name 
+    email
+    subject
+![img_4.png](documentation/images/img_4.png)
+![img_5.png](documentation/images/img_5.png)
+**Expected Successful Response**
+
+    {
+	"status": "Success",
+	"message": null,
+	"data": { "message": "Teacher Created" }
+![img_6.png](documentation/images/img_6.png)
+
+Created Teacher will receive confirmation & auto-generated password through email.
+![img_2.png](documentation/images/img_2.png)
+
+
+
+### Create Classroom
+
+Only admin & teachers can create a classroom. A Teacher can create a class only of his registered subject.
+
+**Endpoint :**
+
+    /api/create-classroom
+
+**⚒️ Request Parameters:**
+
+    subject
+![img_7.png](documentation/images/img_7.png)
+![img_8.png](documentation/images/img_8.png)
+
+**Expected Successful Response**
+
+    {
+	"status": "Success",
+	"message": null,
+	"data": {
+    "message": "Classroom Created",
+    "classroom": {
+        "subject": "physics",
+        "user_id": 1,
+        "invitation_code": "E0m9fPNDruh7",
+        "updated_at": "2021-12-12T09:47:22.000000Z",
+        "created_at": "2021-12-12T09:47:22.000000Z",
+        "id": 3
+        }
+	  }
+    }
+
+### End Classroom
+
+**Endpoint :**
+
+    /api/end-classroom/{class_id}
+
+**Note: include your bearer token**
+
+![img_9.png](documentation/images/img_9.png)
+
+**Expected Successful Response**
+
+    {
+	"status": "Success",
+	"message": null,
+	"data": {
+		"message": "Classroom Ended"
+	  }
+    }
+
+### Create Post (Assignment/Exam) 
+
+Restricted for admin & teachers
+**Endpoint :**
+
+    /api/create-post
+
+**⚒️ Request Parameters:**
+
+    type
+    deadline
+    attachment (image/pdf)
+    class_id
+![img_10.png](documentation/images/img_10.png)
+**Note: include your bearer token**
+
+
+**Expected Successful Response**
+
+    {
+	"status": "Success",
+	"message": null,
+	"data": {
+    "message": "Post Created",
+    "classroom": {
+        "type": "assignment",
+        "deadline": "2021-12-13T15:00:00.000000Z",
+        "user_id": 1,
+        "attachment": "posts\/f6C3maKuwAkZaVwzpfiOFsSlKA1KrEEFxcweN4c3.pdf",
+        "class_id": "2",
+        "updated_at": "2021-12-12T08:09:54.000000Z",
+        "created_at": "2021-12-12T08:09:54.000000Z",
+        "id": 6
+        }
+      }
+    }
+![img_11.png](documentation/images/img_11.png)
+
+
+## Register for a class (For students)
+
+
+### Step 1
+
+To subscribe for a particular class, register with an invitation code at the very first step.
+
+_Note: No Bearer token required_
+**Endpoint :**
+
+    /api/subscribe-to-class-step-1
+
+
+![img_12.png](documentation/images/img_12.png)
+
+**Expected successful return**
+
+    {
+	"status": "Success",
+	"message": null,
+	"data": {
+     "success": "Go for the second step"
+	  }
+    }
+
+
+### Step 2
+
+**Endpoint :**
+
+    /api/subscribe-to-class-step-2
+
+**⚒️ Request Parameters:**
+
+    email
+    password
+    school_id
+    name
+
+![img_13.png](documentation/images/img_13.png)
+
+**Expected Successful Response**
+
+    {
+	"status": "Success",
+	"message": null,
+	"data": {
+		"success": "Student Registered Successfully !"
+	 }
+    }
+
+![img_14.png](documentation/images/img_14.png)
+
+
+## See upcoming deadlines (For students)
+
+To see upcomming deadliens of you registered class, you have to login a student first.
+![img_15.png](documentation/images/img_15.png)
+
+**Endpoint :**
+
+    /api/view-upcoming-deadlines
+
+**Expected Successful Response**
+
+    [
+	{
+		"id": 1,
+		"school_id": 134,
+		"class_id": 1,
+		"classroom": null
+	},
+	{
+		"id": 3,
+		"school_id": 134,
+		"class_id": 2,
+		"classroom": {
+            "id": 2,
+            "subject": "bangla",
+            "posts": [
+                {
+                    "id": 5,
+                    "type": "assignment",
+                    "attachment": "posts\/ilO4TbGuf7C692UbUwWJ7se6BpFfjMbCA2cZbZ3Y.pdf",
+                    "deadline": "2021-12-10T15:00:00.000000Z",
+                    "class_id": 2
+                },
+                {
+                    "id": 6,
+                    "type": "assignment",
+                    "attachment": "posts\/f6C3maKuwAkZaVwzpfiOFsSlKA1KrEEFxcweN4c3.pdf",
+                    "deadline": "2021-12-01T22:00:00.000000Z",
+                    "class_id": 2
+                }
+            ]
+		}
+	}
+    ]
+
+![img_16.png](documentation/images/img_16.png)
+
+The response will send all posts by the corresponding teacher, and only to those classes the student is registered to.
+
+## Submit assignment/exam answer (For students)
+
+Login as a student first.
+
+**Endpoint :**
+
+    /api/submit-assignment-answers
+
+**⚒️ Request Parameters:**
+
+    student_id
+    post_id
+    attachment (image/pdf)
+
+
+![img_17.png](documentation/images/img_17.png)
+
+**Note: include your bearer token**
+
+**Expected Successful Response**
+
+    {
+    "status": "Error",
+    "message": "The deadline is over",
+    "data": null
+    }
+or
+
+    {
+    "status": "Error",
+    "message": "The class has been ended",
+    "data": null
+    }
+or
+
+    {
+    "status": "Success",
+    "message": "attachment submitted",
+    }
+
+## See results for end classes (For students)
+
+Login with your student credentials
+
+**api endpoint**
+
+    /api/see-results
+
+### Expected successful reponse
+![img_18.png](documentation/images/img_18.png)
+
+
+## Sing out
+
+**api endpoint**
+
+    /api/aut/logout
+### Expected successful reponse
+
+    {
+	  "message": "User logged out"
+    }
+

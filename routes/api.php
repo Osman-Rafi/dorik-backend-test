@@ -35,7 +35,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/create-post', [TeachersController::class, 'createPost']);
 
-    Route::get('/view-upcoming-posts', [StudentsController::class, 'seeUpcomingPosts']);
+    Route::get('/view-upcoming-deadlines', [StudentsController::class, 'seeUpcomingPosts']);
     Route::post('/submit-assignment-answers',[StudentsController::class,'submitAssignmentAnswers']);
     Route::get('/see-results',[ResultsController::class,'showResultsOfEndedClass']);
 });
