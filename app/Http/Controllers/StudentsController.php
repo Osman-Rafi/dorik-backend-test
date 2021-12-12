@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\CacheData;
 use App\Classroom;
+use App\Post;
 use App\RegisteredStudent;
+use App\StudentSubmission;
 use App\Traits\ApiResponser;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class StudentsController extends Controller
 {
@@ -72,7 +76,7 @@ class StudentsController extends Controller
     {
         $user = auth()->user();
 
-        $registered_classes = RegisteredStudent::select('id','school_id','class_id')->with([
+        $registered_classes = RegisteredStudent::select('id', 'school_id', 'class_id')->with([
             'classroom' => function ($query) {
                 $query->select('id', 'subject')->with([
                     'posts' => function ($q) {
@@ -83,6 +87,45 @@ class StudentsController extends Controller
         ])->where('user_id', $user->id)->get();
 
         return $registered_classes;
+    }
+
+    public function submitAssignmentAnswers(Request $request)
+    {
+        $attr = $request->validate([
+            'post_id' => 'required',
+            'attachment' => 'required| mimes:pdf,image'
+        ]);
+
+        $post = Post::where('id', $attr['post_id'])->first();
+        $post_deadline = Carbon::parse($post->deadline);
+        $current_time = Carbon::now();
+
+        if ($current_time < $post_deadline) {
+            $class = Classroom::where('id', $post['class_id'])->first();
+
+            if ($class) {
+                $filepath = Storage::disk('public')->put('posts', $attr['attachment']);
+
+                $studentSubmission = StudentSubmission::create([
+                    'post_id' => $attr['post_id'],
+                    'student_id' => auth()->user()->id,
+                    'attachment' => $filepath
+                ]);
+
+                return $this->success([
+                    'message' => 'File Submitted',
+                    'classroom' => $studentSubmission
+                ]);
+            } else {
+                return $this->error('The class has been ended', 200);
+            }
+
+
+        } else {
+            return $this->error('The deadline is over', 200);
+        }
+
+
     }
 
 

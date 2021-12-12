@@ -36,7 +36,6 @@ class CreatePostsTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign('user_id');
             $table->dropForeign('class_id');
-            $table->softDeletes();
         });
         Schema::dropIfExists('posts');
     }
