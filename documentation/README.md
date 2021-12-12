@@ -74,18 +74,18 @@ Note the token `VNK4f81SJqDAGDH6YrER6nlRmjKeVlYNT4hIvE3C`, this will be used as 
     name 
     email
     subject
-![img_4.png](documentation/images/img_4.png)
-![img_5.png](documentation/images/img_5.png)
+![img_4.png](images/img_4.png)
+![img_5.png](images/img_5.png)
 **Expected Successful Response**
 
     {
 	"status": "Success",
 	"message": null,
 	"data": { "message": "Teacher Created" }
-![img_6.png](documentation/images/img_6.png)
+![img_6.png](images/img_6.png)
 
 Created Teacher will receive confirmation & auto-generated password through email.
-![img_2.png](documentation/images/img_2.png)
+![img_2.png](images/img_2.png)
 
 
 
@@ -100,8 +100,8 @@ Only admin & teachers can create a classroom. A Teacher can create a class only 
 **⚒️ Request Parameters:**
 
     subject
-![img_7.png](documentation/images/img_7.png)
-![img_8.png](documentation/images/img_8.png)
+![img_7.png](images/img_7.png)
+![img_8.png](images/img_8.png)
 
 **Expected Successful Response**
 
@@ -129,7 +129,7 @@ Only admin & teachers can create a classroom. A Teacher can create a class only 
 
 **Note: include your bearer token**
 
-![img_9.png](documentation/images/img_9.png)
+![img_9.png](images/img_9.png)
 
 **Expected Successful Response**
 
@@ -154,7 +154,7 @@ Restricted for admin & teachers
     deadline
     attachment (image/pdf)
     class_id
-![img_10.png](documentation/images/img_10.png)
+![img_10.png](images/img_10.png)
 **Note: include your bearer token**
 
 
@@ -177,7 +177,7 @@ Restricted for admin & teachers
         }
       }
     }
-![img_11.png](documentation/images/img_11.png)
+![img_11.png](images/img_11.png)
 
 
 ## Register for a class (For students)
@@ -193,7 +193,7 @@ _Note: No Bearer token required_
     /api/subscribe-to-class-step-1
 
 
-![img_12.png](documentation/images/img_12.png)
+![img_12.png](images/img_12.png)
 
 **Expected successful return**
 
@@ -219,7 +219,7 @@ _Note: No Bearer token required_
     school_id
     name
 
-![img_13.png](documentation/images/img_13.png)
+![img_13.png](images/img_13.png)
 
 **Expected Successful Response**
 
@@ -231,13 +231,13 @@ _Note: No Bearer token required_
 	 }
     }
 
-![img_14.png](documentation/images/img_14.png)
+![img_14.png](images/img_14.png)
 
 
 ## See upcoming deadlines (For students)
 
 To see upcomming deadliens of you registered class, you have to login a student first.
-![img_15.png](documentation/images/img_15.png)
+![img_15.png](images/img_15.png)
 
 **Endpoint :**
 
@@ -279,7 +279,7 @@ To see upcomming deadliens of you registered class, you have to login a student 
 	}
     ]
 
-![img_16.png](documentation/images/img_16.png)
+![img_16.png](images/img_16.png)
 
 The response will send all posts by the corresponding teacher, and only to those classes the student is registered to.
 
@@ -298,7 +298,7 @@ Login as a student first.
     attachment (image/pdf)
 
 
-![img_17.png](documentation/images/img_17.png)
+![img_17.png](images/img_17.png)
 
 **Note: include your bearer token**
 
@@ -332,7 +332,7 @@ Login with your student credentials
     /api/see-results
 
 ### Expected successful reponse
-![img_18.png](documentation/images/img_18.png)
+![img_18.png](images/img_18.png)
 
 
 ## Sing out
