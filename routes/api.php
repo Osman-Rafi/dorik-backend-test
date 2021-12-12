@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TeachersController;
+use App\Http\Controllers\ResultsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +37,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/view-upcoming-posts', [StudentsController::class, 'seeUpcomingPosts']);
     Route::post('/submit-assignment-answers',[StudentsController::class,'submitAssignmentAnswers']);
+    Route::get('/see-results',[ResultsController::class,'showResultsOfEndedClass']);
 });
 
 Route::post('/subscribe-to-class-step-1', [StudentsController::class, 'registerForClassStep1']);
