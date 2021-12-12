@@ -18,7 +18,18 @@ For this demo purpose, **Insomnia** API client is used here.
 For Auth & application security Laravel Sanctum is used. Sanctum is a built in Laravel  featherweight authentication system for SPAs (single page applications), mobile applications, and simple, token based APIs.anctum allows each user of your application to generate multiple API tokens for their account. These tokens may be granted abilities / scopes which specify which actions the tokens are allowed to perform. 
 
 ---
+## Email Service
 
+Gmail SMTP
+
+
+---
+
+
+## Database Architecture Demography
+
+![img.png](images/db.png)
+---
 
 # App Demo
 
